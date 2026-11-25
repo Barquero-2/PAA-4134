@@ -1,0 +1,100 @@
+
+==================================================================
+ACTIVIDAD 1 - Recursividad aplicada (estructura jerarquica)
+==================================================================
+Total de aulas en el campus: 32
+  Pabellon A: 16 aulas
+  Pabellon B: 10 aulas
+  Laboratorios: 5 aulas
+Ruta jerarquica hasta 'Lab IA' (true): Campus > Laboratorios > Lab IA
+
+==================================================================
+ACTIVIDAD 2 - Ordenamiento recursivo (Merge Sort)
+==================================================================
+Traza del ordenamiento alfabetico (6 primeras ubicaciones):
+dividir  [Entrada, Biblioteca, Aulas_A] | [Cafeteria, Auditorio, Laboratorios]
+  dividir  [Entrada] | [Biblioteca, Aulas_A]
+    dividir  [Biblioteca] | [Aulas_A]
+    mezclar  -> [Aulas_A, Biblioteca]
+  mezclar  -> [Aulas_A, Biblioteca, Entrada]
+  dividir  [Cafeteria] | [Auditorio, Laboratorios]
+    dividir  [Auditorio] | [Laboratorios]
+    mezclar  -> [Auditorio, Laboratorios]
+  mezclar  -> [Auditorio, Cafeteria, Laboratorios]
+mezclar  -> [Auditorio, Aulas_A, Biblioteca, Cafeteria, Entrada, Laboratorios]
+
+Directorio alfabetico:
+  Administracion [ADMIN]
+  Auditorio [ACADEMICO]
+  Aulas_A [ACADEMICO]
+  Aulas_B [ACADEMICO]
+  Biblioteca [SERVICIO]
+  Cafeteria [SERVICIO]
+  Entrada [ACCESO]
+  Gimnasio [DEPORTE]
+  Laboratorios [ACADEMICO]
+
+Ubicaciones ordenadas por cercania (linea recta) a la Entrada:
+  Entrada            0.0 m
+  Biblioteca       107.7 m
+  Aulas_A          125.3 m
+  Cafeteria        180.3 m
+  Auditorio        191.0 m
+  Administracion   192.4 m
+  Laboratorios     255.0 m
+  Aulas_B          255.0 m
+  Gimnasio         328.0 m
+
+==================================================================
+ACTIVIDAD 3 - Modelado con grafos
+==================================================================
+Lista de adyacencia (destino(metros)):
+  Entrada         -> Biblioteca(115) Aulas_A(130) 
+  Biblioteca      -> Entrada(115) Cafeteria(85) Auditorio(100) 
+  Aulas_A         -> Entrada(130) Cafeteria(95) Administracion(90) 
+  Cafeteria       -> Biblioteca(85) Aulas_A(95) Laboratorios(90) Aulas_B(100) 
+  Auditorio       -> Biblioteca(100) Laboratorios(105) 
+  Laboratorios    -> Cafeteria(90) Auditorio(105) Gimnasio(100) 
+  Administracion  -> Aulas_A(90) Aulas_B(150) 
+  Aulas_B         -> Cafeteria(100) Administracion(150) Gimnasio(95) 
+  Gimnasio        -> Laboratorios(100) Aulas_B(95) 
+
+DFS - conectividad del campus desde Entrada:
+  Alcanzables: 9 de 9 -> campus totalmente conexo
+
+BFS - servicio mas cercano (por cantidad de tramos) desde Administracion:
+  Ruta      : Administracion -> Aulas_A -> Cafeteria
+  Distancia : 185 m | Tramos: 2 | Nodos explorados: 5
+  Orden de exploracion: [Administracion, Aulas_A, Aulas_B, Entrada, Cafeteria]
+
+==================================================================
+COMPARACION DE RUTAS: Entrada -> Gimnasio
+==================================================================
+DFS
+  Ruta      : Entrada -> Biblioteca -> Cafeteria -> Aulas_A -> Administracion -> Aulas_B -> Gimnasio
+  Distancia : 630 m | Tramos: 6 | Nodos explorados: 7
+  Orden de exploracion: [Entrada, Biblioteca, Cafeteria, Aulas_A, Administracion, Aulas_B, Gimnasio]
+BFS
+  Ruta      : Entrada -> Biblioteca -> Cafeteria -> Laboratorios -> Gimnasio
+  Distancia : 390 m | Tramos: 4 | Nodos explorados: 9
+  Orden de exploracion: [Entrada, Biblioteca, Aulas_A, Cafeteria, Auditorio, Administracion, Laboratorios, Aulas_B, Gimnasio]
+A* (sin heuristica = Dijkstra)
+  Ruta      : Entrada -> Biblioteca -> Cafeteria -> Laboratorios -> Gimnasio
+  Distancia : 390 m | Tramos: 4 | Nodos explorados: 9
+  Orden de exploracion: [Entrada, Biblioteca, Aulas_A, Cafeteria, Auditorio, Administracion, Laboratorios, Aulas_B, Gimnasio]
+A* (con heuristica)
+  Ruta      : Entrada -> Biblioteca -> Cafeteria -> Laboratorios -> Gimnasio
+  Distancia : 390 m | Tramos: 4 | Nodos explorados: 6
+  Orden de exploracion: [Entrada, Biblioteca, Cafeteria, Aulas_A, Laboratorios, Gimnasio]
+
+==================================================================
+A* en otra consulta: Administracion -> Laboratorios
+==================================================================
+Sin heuristica
+  Ruta      : Administracion -> Aulas_A -> Cafeteria -> Laboratorios
+  Distancia : 275 m | Tramos: 3 | Nodos explorados: 8
+  Orden de exploracion: [Administracion, Aulas_A, Aulas_B, Cafeteria, Entrada, Gimnasio, Biblioteca, Laboratorios]
+Con heuristica
+  Ruta      : Administracion -> Aulas_A -> Cafeteria -> Laboratorios
+  Distancia : 275 m | Tramos: 3 | Nodos explorados: 5
+  Orden de exploracion: [Administracion, Aulas_B, Aulas_A, Cafeteria, Laboratorios]
